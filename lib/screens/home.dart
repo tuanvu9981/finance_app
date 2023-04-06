@@ -24,28 +24,13 @@ class Home extends StatelessWidget {
                       bottomRight: Radius.circular(20.0),
                     ),
                   ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 15,
-                        right: 15,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(7.0),
-                          child: Container(
-                            width: 40.0,
-                            height: 40.0,
-                            color: const Color.fromRGBO(250, 250, 250, 0.1),
-                            child: const Icon(
-                              Icons.notification_add_outlined,
-                              size: 30.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0, left: 15.0),
-                        child: Column(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
                             Text(
@@ -66,8 +51,21 @@ class Home extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(7.0),
+                          child: Container(
+                            width: 40.0,
+                            height: 40.0,
+                            color: const Color.fromRGBO(250, 250, 250, 0.1),
+                            child: const Icon(
+                              Icons.notification_add_outlined,
+                              size: 30.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
