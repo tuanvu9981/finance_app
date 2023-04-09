@@ -1,5 +1,4 @@
-import 'package:finance_app/screens/home.dart';
-import 'package:finance_app/screens/statistics.dart';
+import 'package:finance_app/screens/page_with_btm_nav.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +16,7 @@ class FinanceApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Statistics(),
+      home: const PageWithBtmNav(),
     );
   }
 }
