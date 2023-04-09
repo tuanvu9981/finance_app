@@ -267,8 +267,8 @@ class Home extends StatelessWidget {
                     ),
                     trailing: Text(
                       transactions[index].buy == true
-                          ? "+ ${transactions[index].fee!}"
-                          : "- ${transactions[index].fee!}",
+                          ? "- ${transactions[index].fee!}"
+                          : "+ ${transactions[index].fee!}",
                       style: TextStyle(
                         color: transactions[index].buy == true
                             ? Colors.red

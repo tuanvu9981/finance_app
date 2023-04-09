@@ -51,3 +51,5 @@ final transactions = <Transaction>[
     buy: true,
   ),
 ];
+
+final topTransactions = transactions.where((e) => e.buy == true).toList();
