@@ -8,6 +8,9 @@ class AddScreen extends StatefulWidget {
 }
 
 class AddScreenState extends State<AddScreen> {
+  String? selectedItem;
+  final _items = <String>["Food", "Transfer", "Transportation", "Education"];
+
   Widget buildBackground(double screenHeight, BuildContext context) {
     return Column(
       children: [
@@ -66,6 +69,76 @@ class AddScreenState extends State<AddScreen> {
     );
   }
 
+  Widget buildDropDown(double screenHeight, double screenWidth) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      width: screenWidth * 0.72,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        border: Border.all(width: 2.0, color: Color(0xffC5C5C5)),
+      ),
+      child: DropdownButton<String>(
+        value: selectedItem,
+        items: _items
+            .map((e) => DropdownMenuItem(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          child: Image.asset(
+                            'assets/images/$e.jpg',
+                            height: 50.0,
+                            width: 40.0,
+                          ),
+                        ),
+                        const SizedBox(width: 10.0),
+                        Text(
+                          e,
+                          style: const TextStyle(fontSize: 18.0),
+                        )
+                      ],
+                    ),
+                  ),
+                  value: e,
+                ))
+            .toList(),
+        selectedItemBuilder: (context) => _items
+            .map(
+              (e) => Row(
+                children: [
+                  Container(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.asset(
+                        'assets/images/$e.jpg',
+                        height: 40.0,
+                        width: 40.0,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10.0),
+                  Text(
+                    e,
+                    style: const TextStyle(fontSize: 18.0),
+                  )
+                ],
+              ),
+            )
+            .toList(),
+        hint: const Text('Name', style: TextStyle(color: Colors.grey)),
+        isExpanded: true,
+        dropdownColor: Colors.white,
+        underline: Container(),
+        onChanged: (value) {
+          setState(() {
+            selectedItem = value;
+          });
+        },
+      ),
+    );
+  }
+
   Widget buildMainContainer(double screenHeight, double screenWidth) {
     return Container(
       decoration: BoxDecoration(
@@ -77,13 +150,9 @@ class AddScreenState extends State<AddScreen> {
       child: Column(
         children: [
           const SizedBox(height: 50.0),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              border: Border.all(width: 2.0, color: Color(0xffC5C5C5)),
-            ),
-            // child: DropdownButton(),
-          ),
+          buildDropDown(screenHeight, screenWidth),
+          const SizedBox(height: 30.0),
+          TextField(),
         ],
       ),
     );
