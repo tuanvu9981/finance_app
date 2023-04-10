@@ -1,3 +1,4 @@
+import 'package:finance_app/screens/add_screen.dart';
 import 'package:finance_app/screens/home.dart';
 import 'package:finance_app/screens/statistics.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,11 @@ class PageWithBtmNavState extends State<PageWithBtmNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const AddScreen()),
+          );
+        },
         backgroundColor: const Color(0xff368983),
         child: const Icon(Icons.add),
       ),
