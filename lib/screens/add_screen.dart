@@ -9,7 +9,19 @@ class AddScreen extends StatefulWidget {
 
 class AddScreenState extends State<AddScreen> {
   String? selectedItem;
+  final expalin_C = TextEditingController();
+  final ex = FocusNode();
   final _items = <String>["Food", "Transfer", "Transportation", "Education"];
+
+  @override
+  void initState() {
+    super.initState();
+    ex.addListener(() {
+      setState(() {
+        
+      });
+    })
+  }
 
   Widget buildBackground(double screenHeight, BuildContext context) {
     return Column(
@@ -152,7 +164,29 @@ class AddScreenState extends State<AddScreen> {
           const SizedBox(height: 50.0),
           buildDropDown(screenHeight, screenWidth),
           const SizedBox(height: 30.0),
-          TextField(),
+          TextField(
+            focusNode: ex,
+            controller: expalin_C,
+            decoration: InputDecoration(
+              labelText: 'explain',
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 15.0,
+                vertical: 15.0,
+              ),
+              labelStyle: TextStyle(
+                fontSize: 17.0,
+                color: Colors.grey.shade500,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(width: 2.0, color: Color(0xffC5C5C5)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                borderSide: BorderSide(width: 2.0, color: Color(0xffC5C5C5)),
+              ),
+            ),
+          ),
         ],
       ),
     );
