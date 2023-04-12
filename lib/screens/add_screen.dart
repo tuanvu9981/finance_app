@@ -8,19 +8,25 @@ class AddScreen extends StatefulWidget {
 }
 
 class AddScreenState extends State<AddScreen> {
+  var date = DateTime.now();
   String? selectedItem;
-  final expalin_C = TextEditingController();
+  String? howItem;
+  var explain_C = TextEditingController();
   final ex = FocusNode();
+  var amount_c = TextEditingController();
+  final amount_ = FocusNode();
   final _items = <String>["Food", "Transfer", "Transportation", "Education"];
+  final _howItems = <String>["Income", "Expand"];
 
   @override
   void initState() {
     super.initState();
     ex.addListener(() {
-      setState(() {
-        
-      });
-    })
+      setState(() {});
+    });
+    amount_.addListener(() {
+      setState(() {});
+    });
   }
 
   Widget buildBackground(double screenHeight, BuildContext context) {
@@ -83,7 +89,7 @@ class AddScreenState extends State<AddScreen> {
 
   Widget buildDropDown(double screenHeight, double screenWidth) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       width: screenWidth * 0.72,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
@@ -93,8 +99,9 @@ class AddScreenState extends State<AddScreen> {
         value: selectedItem,
         items: _items
             .map((e) => DropdownMenuItem(
+                  value: e,
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5.0),
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Row(
                       children: [
                         Container(
@@ -112,7 +119,6 @@ class AddScreenState extends State<AddScreen> {
                       ],
                     ),
                   ),
-                  value: e,
                 ))
             .toList(),
         selectedItemBuilder: (context) => _items
@@ -151,6 +157,140 @@ class AddScreenState extends State<AddScreen> {
     );
   }
 
+  Widget buildExplainTextField() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextField(
+        focusNode: ex,
+        controller: explain_C,
+        decoration: InputDecoration(
+          labelText: 'Explain',
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 15.0,
+          ),
+          labelStyle: TextStyle(
+            fontSize: 17.0,
+            color: Colors.grey.shade500,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide: BorderSide(width: 2.0, color: Color(0xffC5C5C5)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide: BorderSide(width: 2.0, color: Color(0xffC5C5C5)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildAmountTextField() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextField(
+        keyboardType: TextInputType.number,
+        focusNode: amount_,
+        controller: amount_c,
+        decoration: InputDecoration(
+          labelText: 'Amount',
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 15.0,
+          ),
+          labelStyle: TextStyle(
+            fontSize: 17.0,
+            color: Colors.grey.shade500,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide: BorderSide(width: 2.0, color: Color(0xffC5C5C5)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            borderSide: BorderSide(width: 2.0, color: Color(0xffC5C5C5)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildHowSelect(double screenWidth) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      width: screenWidth * 0.72,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        border: Border.all(width: 2.0, color: Color(0xffC5C5C5)),
+      ),
+      child: DropdownButton<String>(
+        value: howItem,
+        items: _howItems
+            .map(
+              (e) => DropdownMenuItem(
+                value: e,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: Text(
+                    e,
+                    style: const TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+        selectedItemBuilder: (context) => _howItems
+            .map(
+              (e) => Text(
+                e,
+                style: const TextStyle(fontSize: 18.0),
+              ),
+            )
+            .toList(),
+        hint: const Text('How', style: TextStyle(color: Colors.grey)),
+        isExpanded: true,
+        dropdownColor: Colors.white,
+        underline: Container(),
+        onChanged: (value) {
+          setState(() {
+            howItem = value;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget buildDatePicker(double screenWidth) {
+    return Container(
+      alignment: Alignment.bottomLeft,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(width: 2.0, color: Color(0xffC5C5C5)),
+      ),
+      width: screenWidth * 0.72,
+      child: TextButton(
+        onPressed: () async {
+          DateTime? newDate = await showDatePicker(
+            context: context,
+            initialDate: date,
+            firstDate: DateTime(2020),
+            lastDate: DateTime(2035),
+          );
+          if (newDate != null) {
+            setState(() {
+              date = newDate;
+            });
+          }
+        },
+        child: Text(
+          'Date: ${date.year} / ${date.month} / ${date.day}',
+          style: TextStyle(color: Colors.black, fontSize: 15.0),
+        ),
+      ),
+    );
+  }
+
   Widget buildMainContainer(double screenHeight, double screenWidth) {
     return Container(
       decoration: BoxDecoration(
@@ -164,29 +304,14 @@ class AddScreenState extends State<AddScreen> {
           const SizedBox(height: 50.0),
           buildDropDown(screenHeight, screenWidth),
           const SizedBox(height: 30.0),
-          TextField(
-            focusNode: ex,
-            controller: expalin_C,
-            decoration: InputDecoration(
-              labelText: 'explain',
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 15.0,
-                vertical: 15.0,
-              ),
-              labelStyle: TextStyle(
-                fontSize: 17.0,
-                color: Colors.grey.shade500,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.0),
-                borderSide: BorderSide(width: 2.0, color: Color(0xffC5C5C5)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.0),
-                borderSide: BorderSide(width: 2.0, color: Color(0xffC5C5C5)),
-              ),
-            ),
-          ),
+          buildExplainTextField(),
+          const SizedBox(height: 30.0),
+          buildAmountTextField(),
+          const SizedBox(height: 30.0),
+          buildHowSelect(screenWidth),
+          const SizedBox(height: 30.0),
+          buildDatePicker(screenWidth),
+          const SizedBox(height: 30.0),
         ],
       ),
     );
