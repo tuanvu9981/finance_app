@@ -1,4 +1,5 @@
 import 'package:finance_app/models/expense_data.dart';
+import 'package:finance_app/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive/hive.dart';
@@ -127,9 +128,9 @@ class HomeState extends State<Home> {
                   const SizedBox(height: 5.0),
 
                   // Total money
-                  const Text(
-                    '\$ 2977',
-                    style: TextStyle(
+                  Text(
+                    '\$ ${getCurrentBalance()}',
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25.0,
                       color: Colors.white,
@@ -184,18 +185,18 @@ class HomeState extends State<Home> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         Text(
-                          '\$ 1400',
-                          style: TextStyle(
+                          '\$ ${getCurrentIncome()}',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          '\$ 249.5',
-                          style: TextStyle(
+                          '\$ ${getCurrentExpense()}',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
