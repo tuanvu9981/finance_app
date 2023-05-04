@@ -1,8 +1,18 @@
-import 'package:finance_app/models/transaction.dart';
+import 'package:finance_app/models/expense_data.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  HomeState createState() => HomeState();
+}
+
+class HomeState extends State<Home> {
+  final box = Hive.box<ExpenseData>('data');
+  var history;
 
   Widget _buildHeader(double screenHeight, double screenWidth) {
     return Stack(
@@ -240,48 +250,56 @@ class Home extends StatelessWidget {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                childCount: transactions.length,
+                // childCount: transactions.length,
+                childCount: box.length,
                 (context, index) {
-                  return ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(5.0),
-                      child: Image.asset(
-                        transactions[index].imageUrl!,
-                        height: 65.0,
-                        width: 65.0,
-                      ),
-                    ),
-                    title: Text(
-                      transactions[index].name!,
-                      style: const TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    subtitle: Text(
-                      transactions[index].time!,
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    trailing: Text(
-                      transactions[index].buy == true
-                          ? "- ${transactions[index].fee!}"
-                          : "+ ${transactions[index].fee!}",
-                      style: TextStyle(
-                        color: transactions[index].buy == true
-                            ? Colors.red
-                            : Colors.green,
-                        fontSize: 17.5,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  );
+                  history = box.values.toList()[index];
+                  return getListTile(index, history);
                 },
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  ListTile getListTile(int index, ExpenseData history) {
+    return ListTile(
+      // leading: ClipRRect(
+      //   borderRadius: BorderRadius.circular(5.0),
+      //   child: Image.asset(
+      //     transactions[index].imageUrl!,
+      //     height: 65.0,
+      //     width: 65.0,
+      //   ),
+      // ),
+      title: Text(
+        // transactions[index].name!,
+        history.name!,
+        style: const TextStyle(
+          fontSize: 17.0,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      subtitle: Text(
+        // transactions[index].time!,
+        '${day[history.dateTime!.weekday - 1]}  ${history.dateTime!.year}-${history.dateTime!.day}-${history.dateTime!.month}',
+        style: const TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      trailing: Text(
+        // transactions[index].buy == true
+        //     ? "- ${transactions[index].fee!}"
+        //     : "+ ${transactions[index].fee!}",
+        history.amount!,
+        style: TextStyle(
+          // color: transactions[index].buy == true ? Colors.red : Colors.green,
+          color: history.IN == 'income' ? Colors.green : Colors.red,
+          fontSize: 17.5,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

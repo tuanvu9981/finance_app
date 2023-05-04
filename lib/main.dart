@@ -1,7 +1,12 @@
 import 'package:finance_app/screens/page_with_btm_nav.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:finance_app/models/expense_data.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(ExpenseDataAdapter());
+  await Hive.openBox<ExpenseData>('data');
   runApp(const FinanceApp());
 }
 

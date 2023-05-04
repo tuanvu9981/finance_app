@@ -1,4 +1,6 @@
+import 'package:finance_app/models/expense_data.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({Key? key}) : super(key: key);
@@ -8,6 +10,7 @@ class AddScreen extends StatefulWidget {
 }
 
 class AddScreenState extends State<AddScreen> {
+  final box = Hive.box<ExpenseData>('data');
   var date = DateTime.now();
   String? selectedItem;
   String? howItem;
@@ -311,7 +314,38 @@ class AddScreenState extends State<AddScreen> {
           buildHowSelect(screenWidth),
           const SizedBox(height: 30.0),
           buildDatePicker(screenWidth),
-          const SizedBox(height: 30.0),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {
+              var newData = ExpenseData(
+                IN: selectedItem!,
+                amount: amount_c.text,
+                dateTime: date,
+                explain: explain_C.text,
+                name: selectedItem!,
+              );
+              box.add(newData);
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: const Color(0xff368983),
+              ),
+              width: screenWidth * 0.24,
+              height: 50.0,
+              child: const Text(
+                'Save',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontSize: 17.0,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20.0),
         ],
       ),
     );

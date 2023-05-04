@@ -86,3 +86,32 @@ Row(
 <p align="center">
     <img src="https://github.com/tuanvu9981/finance_app/blob/master/screenshot/after.png" />
 <p> 
+
+### 3. Biên dịch và tạo file mới với hive 
+- a. **Installation**
+```
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  syncfusion_flutter_charts: ^20.2.44
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  intl: ^0.18.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  hive_generator: ^1.1.3
+  build_runner: ^2.2.0
+```
+
+- b. **Naming rules**
+    - **expense_data.dart** will generate a **expense_data.g.dart** file
+
+- c. **Commands**
+```
+tuanvu81@host81:~/Desktop/finance_app$ flutter packages pub run build_runner build
+```
+
