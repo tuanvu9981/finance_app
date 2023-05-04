@@ -13,6 +13,15 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   final box = Hive.box<ExpenseData>('data');
   var history;
+  final List<String> day = [
+    'Monday',
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    'friday',
+    'saturday',
+    'sunday'
+  ];
 
   Widget _buildHeader(double screenHeight, double screenWidth) {
     return Stack(
@@ -211,69 +220,84 @@ class HomeState extends State<Home> {
 
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: screenHeight * (0.28 * 0.7 + 0.2),
-                child: _buildHeader(screenHeight, screenWidth),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15.0,
-                  vertical: 20.0,
+        child: ValueListenableBuilder(
+          valueListenable: box.listenable(),
+          builder: (context, value, child) {
+            return CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: screenHeight * (0.28 * 0.7 + 0.2),
+                    child: _buildHeader(screenHeight, screenWidth),
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'Transaction History',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.0,
-                        color: Colors.black,
-                      ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0,
+                      vertical: 20.0,
                     ),
-                    Text(
-                      'See all',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.0,
-                        color: Colors.grey,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Transaction History',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'See all',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.0,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                // childCount: transactions.length,
-                childCount: box.length,
-                (context, index) {
-                  history = box.values.toList()[index];
-                  return getListTile(index, history);
-                },
-              ),
-            )
-          ],
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    // childCount: transactions.length,
+                    childCount: box.length,
+                    (context, index) {
+                      history = box.values.toList()[index];
+                      return getList(history);
+                    },
+                  ),
+                )
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  ListTile getListTile(int index, ExpenseData history) {
+  Widget getList(ExpenseData history) {
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: (direction) {
+        history.delete();
+      },
+      child: getListTile(history),
+    );
+  }
+
+  ListTile getListTile(ExpenseData history) {
     return ListTile(
-      // leading: ClipRRect(
-      //   borderRadius: BorderRadius.circular(5.0),
-      //   child: Image.asset(
-      //     transactions[index].imageUrl!,
-      //     height: 65.0,
-      //     width: 65.0,
-      //   ),
-      // ),
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(5.0),
+        child: Image.asset(
+          'assets/images/${history.name}.png',
+          height: 65.0,
+          width: 65.0,
+        ),
+      ),
       title: Text(
         // transactions[index].name!,
         history.name!,
