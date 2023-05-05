@@ -115,3 +115,23 @@ dev_dependencies:
 tuanvu81@host81:~/Desktop/finance_app$ flutter packages pub run build_runner build
 ```
 
+### 4. 
+```
+child: DropdownButton<String>(
+    selectedItemBuilder: (context) => _howItems
+        .map(
+            (e) => Row(
+            children: [
+                Text(
+                e,
+                style: const TextStyle(fontSize: 18.0),
+                )
+            ],
+            ),
+        )
+        .toList(),
+    
+    ...
+);
+```
+- Row sẽ giúp căn chính giữa ô Input, Text không thôi sẽ bị lệch lên phía trên

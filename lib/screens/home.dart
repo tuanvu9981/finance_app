@@ -1,8 +1,8 @@
 import 'package:finance_app/models/expense_data.dart';
+import 'package:finance_app/utils/greeting.dart';
 import 'package:finance_app/utils/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,9 +19,9 @@ class HomeState extends State<Home> {
     "Tuesday",
     "Wednesday",
     "Thursday",
-    'friday',
-    'saturday',
-    'sunday'
+    'Friday',
+    'Saturday',
+    'Sunday'
   ];
 
   Widget _buildHeader(double screenHeight, double screenWidth) {
@@ -47,17 +47,17 @@ class HomeState extends State<Home> {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          'Good afternoon',
-                          style: TextStyle(
+                          buildGreeting(),
+                          style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16.0,
                             color: Color.fromARGB(255, 224, 223, 223),
                           ),
                         ),
-                        Text(
-                          'Enjelin Morgeara',
+                        const Text(
+                          'Tuan Vu',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 20.0,
@@ -294,7 +294,7 @@ class HomeState extends State<Home> {
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(5.0),
         child: Image.asset(
-          'assets/images/${history.name}.png',
+          'assets/images/${history.name}.jpg',
           height: 65.0,
           width: 65.0,
         ),
@@ -322,7 +322,7 @@ class HomeState extends State<Home> {
         history.amount!,
         style: TextStyle(
           // color: transactions[index].buy == true ? Colors.red : Colors.green,
-          color: history.IN == 'income' ? Colors.green : Colors.red,
+          color: history.IN == 'Income' ? Colors.green : Colors.red,
           fontSize: 17.5,
           fontWeight: FontWeight.w600,
         ),

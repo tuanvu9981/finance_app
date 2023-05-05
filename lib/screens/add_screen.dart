@@ -19,7 +19,7 @@ class AddScreenState extends State<AddScreen> {
   var amount_c = TextEditingController();
   final amount_ = FocusNode();
   final _items = <String>["Food", "Transfer", "Transportation", "Education"];
-  final _howItems = <String>["Income", "Expand"];
+  final _howItems = <String>["Income", "Expense"];
 
   @override
   void initState() {
@@ -245,9 +245,13 @@ class AddScreenState extends State<AddScreen> {
             .toList(),
         selectedItemBuilder: (context) => _howItems
             .map(
-              (e) => Text(
-                e,
-                style: const TextStyle(fontSize: 18.0),
+              (e) => Row(
+                children: [
+                  Text(
+                    e,
+                    style: const TextStyle(fontSize: 18.0),
+                  )
+                ],
               ),
             )
             .toList(),
@@ -318,7 +322,7 @@ class AddScreenState extends State<AddScreen> {
           GestureDetector(
             onTap: () {
               var newData = ExpenseData(
-                IN: selectedItem!,
+                IN: howItem!,
                 amount: amount_c.text,
                 dateTime: date,
                 explain: explain_C.text,
