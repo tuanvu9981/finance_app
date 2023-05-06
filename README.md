@@ -115,7 +115,7 @@ dev_dependencies:
 tuanvu81@host81:~/Desktop/finance_app$ flutter packages pub run build_runner build
 ```
 
-### 4. 
+### 4. / Lưu ý UI drop down 
 ```
 child: DropdownButton<String>(
     selectedItemBuilder: (context) => _howItems
@@ -135,3 +135,30 @@ child: DropdownButton<String>(
 );
 ```
 - Row sẽ giúp căn chính giữa ô Input, Text không thôi sẽ bị lệch lên phía trên
+
+### 5. Chú ý khi viết unit test
+- **Unit tests** are handy for verifying the behavior of a **single function, method, or class**. 
+- **Test files should always end with _test.dart**, this is the convention used by the test runner when searching for tests.
+- Command: 
+```
+flutter test test/<fileName_test>.dart
+```
+
+- Result **true**: 
+```
+tuanvu81@host81:~/Desktop/finance_app$ flutter test tests/utils/greeting_test.dart 
+00:24 +1: All tests passed! 
+```
+
+- Result **false**: 
+```
+tuanvu81@host81:~/Desktop/finance_app$ flutter test tests/utils/greeting_test.dart 
+00:03 +1 -1: Check if with argument value, greeting is true or not Hour is 10 [E]                                                  
+  Expected: 'Good afternoon'
+    Actual: 'Good morning'
+     Which: is different.
+```
+
+### 6. Dev dependencies and Production dependencies
+- **flutter pub add <packagename> --dev** to add under dev dependencies
+- dev_dependencies only have packages and tools which help the development process for the developer and are not really needed in production.
