@@ -3,6 +3,33 @@
 ### References
 - [Youtube Video URL](https://www.youtube.com/watch?v=9-QFt-cWZV8&t=11s)
 
+### Images about this app.
+<table align="center">
+  <tr align="center">
+    <th>
+        <img
+            src="https://github.com/tuanvu9981/finance_app/blob/master/screenshot/main.jpg"
+            width="60%" 
+            height="60%"
+        />
+    </th>
+    <th>
+        <img 
+            src="https://github.com/tuanvu9981/finance_app/blob/master/screenshot/add.jpg"
+            width="60%" 
+            height="60%"
+        />
+    </th>
+    <th>
+        <img 
+            src="https://github.com/tuanvu9981/finance_app/blob/master/screenshot/statistic.jpg"
+            width="60%" 
+            height="60%"
+        />
+    </th>
+  </tr>
+</table>
+
 ### 1. Tại sao để Column trong Stack thì có thể chồng 2 khối lệch vị trí với nhau ?
 - **Stack** hiển thị theo phần tử có kích thước lớn nhất trong **children** của nó 
 - Trước khi để **Column**
